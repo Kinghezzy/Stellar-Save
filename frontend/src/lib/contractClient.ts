@@ -20,10 +20,9 @@ import {
 } from '@stellar/stellar-sdk';
 import * as freighterApi from '@stellar/freighter-api';
 import { env } from './env';
+import { rpcServer } from './rpcClient';
 
 // ─── Config ──────────────────────────────────────────────────────────────────
-
-const RPC_URL: string = env.VITE_STELLAR_RPC_URL;
 
 const NETWORK_PASSPHRASE: string =
   env.VITE_STELLAR_NETWORK === 'mainnet' ? Networks.PUBLIC : Networks.TESTNET;
@@ -31,7 +30,7 @@ const NETWORK_PASSPHRASE: string =
 export const CONTRACT_ID: string = env.VITE_STELLAR_SAVE_CONTRACT_ID;
 
 // Soroban RPC server instance (singleton)
-export const server = new SorobanRpc.Server(RPC_URL, { allowHttp: false });
+export const server = rpcServer;
 
 // ─── Error Handling ───────────────────────────────────────────────────────────
 

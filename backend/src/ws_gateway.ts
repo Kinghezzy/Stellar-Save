@@ -41,7 +41,7 @@
 import { Gauge, Counter } from 'prom-client';
 import { WebSocketServer, WebSocket } from 'ws';
 
-import { verifyJwt } from './auth_service';
+import { verifyJwt } from './modules/auth/auth_service';
 import { config } from './config';
 import { logger } from './logger';
 import { registry } from './metrics';

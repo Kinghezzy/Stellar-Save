@@ -33,12 +33,12 @@ import crypto from 'crypto';
 import { Router } from 'express';
 import { Gauge, Counter } from 'prom-client';
 
-import { adminAuthMiddleware } from './auth_middleware';
+import { adminAuthMiddleware } from './modules/auth/auth_middleware';
 import { logger } from './logger';
 import { registry } from './metrics';
 import { prisma } from './prisma_client';
 
-import type { AuthenticatedRequest } from './auth_middleware';
+import type { AuthenticatedRequest } from './modules/auth/auth_middleware';
 import type { Request, Response, NextFunction} from 'express';
 
 // ── Prometheus metrics ────────────────────────────────────────────────────────

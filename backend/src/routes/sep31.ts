@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { jwtAuthMiddleware } from '../auth_middleware';
+import { jwtAuthMiddleware } from '../modules/auth/auth_middleware';
 import { AppError } from '../lib/errors';
 import { logger } from '../logger';
 import { getQuote, sendPayment, getPaymentStatus } from '../services/sep31';
 
-import type { AuthenticatedRequest } from '../auth_middleware';
+import type { AuthenticatedRequest } from '../modules/auth/auth_middleware';
 import type { Response, NextFunction } from 'express';
 
 export function createSep31Router(): Router {

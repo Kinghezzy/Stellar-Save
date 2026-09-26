@@ -3,9 +3,9 @@ import * as crypto from 'crypto';
 import { Keypair } from '@stellar/stellar-sdk';
 import * as jwt from 'jsonwebtoken';
 
-import { config } from './config';
-import { prisma } from './prisma_client';
-import * as redisClient from './redis';
+import { config } from '../../config';
+import { prisma } from '../../prisma_client';
+import * as redisClient from '../../redis';
 
 const JWT_SECRET = config.auth.jwtSecret;
 const ACCESS_TOKEN_TTL = config.auth.accessTokenTtl; // e.g. '15m'

@@ -7,10 +7,10 @@ import {
   reviewFlag,
   getAuditLog,
 } from '../aml_service';
-import { adminAuthMiddleware, jwtAuthMiddleware } from '../auth_middleware';
+import { adminAuthMiddleware, jwtAuthMiddleware } from '../modules/auth/auth_middleware';
 import { AppError } from '../lib/errors';
 
-import type { AuthenticatedRequest } from '../auth_middleware';
+import type { AuthenticatedRequest } from '../modules/auth/auth_middleware';
 import type { Response, NextFunction } from 'express';
 
 export function createComplianceRouter(): Router {
