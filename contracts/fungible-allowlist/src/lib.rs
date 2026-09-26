@@ -17,3 +17,5 @@ mod test_utils;
 mod benchmark_tests;
 #[cfg(test)]
 mod fuzz_tests;
+#[cfg(test)]
+mod cross_contract_tests;
