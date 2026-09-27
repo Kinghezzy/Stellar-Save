@@ -21,6 +21,8 @@
 
 #[cfg(test)]
 mod tests {
+    extern crate std;
+
     use soroban_sdk::{Bytes, BytesN, Env, testutils::Address as _};
 
     // ─── Helper: create raw Bytes of given length filled with `val` ──────────
@@ -124,7 +126,7 @@ mod tests {
         let verifying_key = signing_key.verifying_key();
 
         let payload_bytes = {
-            let mut p = Vec::new();
+            let mut p = std::vec::Vec::new();
             p.extend_from_slice(&group_id.to_le_bytes());
             p.extend_from_slice(&cycle.to_le_bytes());
             p

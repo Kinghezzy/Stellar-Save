@@ -16,7 +16,7 @@ use crate::refund::RefundRecord;
 use crate::search::{SearchParams, SearchResult};
 use crate::storage::{StorageKey, StorageKeyBuilder};
 use crate::types::{AssignmentMode, ContractConfig, MemberProfile, PayoutScheduleEntry};
-use soroban_sdk::{contract, contractimpl, Address, Env, String, Symbol, Vec, Map, BytesN};
+use soroban_sdk::{contract, contractimpl, Address, Bytes, Env, String, Symbol, Vec, Map, BytesN};
 use crate::{governance, milestones, payout_executor, penalty, rating, refund, search, migration};
 
 #[contract]
@@ -4879,9 +4879,11 @@ pub fn validate_amount_range(env: &Env, amount: i128) -> Result<(), StellarSaveE
     Ok(())
 }
 
+#[contractimpl]
 impl StellarSaveContract {
     // =========================================================================
     // ISSUE #479: Contribution Proof Verification
+    // ISSUE #1740: Wired to real zk proof verification (see `zk_proof` module)
     // =========================================================================
 
     /// Enables or disables contribution proof requirement for a group.
@@ -4907,12 +4909,20 @@ impl StellarSaveContract {
 
     /// Verifies a contribution proof for a member in a cycle.
     ///
+    /// `proof` is the zk-proof blob generated off-chain (see `zk/client` and
+    /// `zk/server` for the Phase-1 Ed25519 proof-of-concept scheme, documented
+    /// in `zk/CIRCUIT_AUDIT.md`). The proof is bound to `group_id` and `cycle`;
+    /// a proof that fails cryptographic verification is rejected with
+    /// `StellarSaveError::InvalidProof` (malformed length) or causes the host
+    /// to trap (invalid signature) — see `zk_proof::verify_contribution_proof`.
+    ///
     /// Must be called before `contribute_with_proof` when the group requires proof.
     pub fn verify_contribution_proof(
         env: Env,
         group_id: u64,
         member: Address,
         cycle: u32,
+        proof: Bytes,
     ) -> Result<(), StellarSaveError> {
         let group_key = StorageKeyBuilder::group_data(group_id);
         let group = env
@@ -4929,6 +4939,10 @@ impl StellarSaveContract {
         let member_key = StorageKeyBuilder::member_profile(group_id, member.clone());
         if !env.storage().persistent().has(&member_key) {
             return Err(StellarSaveError::NotMember);
+        }
+
+        if !crate::zk_proof::verify_contribution_proof(&env, &proof, group_id, cycle) {
+            return Err(StellarSaveError::InvalidProof);
         }
 
         let proof_key =
