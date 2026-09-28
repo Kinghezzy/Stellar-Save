@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { jwtAuthMiddleware, requireSelf } from '../auth_middleware';
+import { jwtAuthMiddleware, requireSelf } from '../modules/auth/auth_middleware';
 import { AppError } from '../lib/errors';
 import { logger } from '../logger';
 
-import type { AuthenticatedRequest } from '../auth_middleware';
+import type { AuthenticatedRequest } from '../modules/auth/auth_middleware';
 import type { NextFunction } from 'express';
 
 /**

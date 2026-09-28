@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { jwtAuthMiddleware } from '../auth_middleware';
+import { jwtAuthMiddleware } from '../modules/auth/auth_middleware';
 import { AppError } from '../lib/errors';
 import { getQuotaUsage, getTierConfig, getConfiguredTiers } from '../redis_rate_limiter';
 

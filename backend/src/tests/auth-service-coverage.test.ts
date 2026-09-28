@@ -16,7 +16,7 @@ import {
   issueRefreshToken,
   revokeSession,
   revokeAllSessions,
-} from '../auth_service';
+} from '../modules/auth/auth_service';
 
 describe('auth_service Unit Test Coverage', () => {
   const validKeypair = Keypair.random();

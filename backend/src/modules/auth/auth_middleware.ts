@@ -1,8 +1,13 @@
-
 import { verifyJwt } from './auth_service';
-import { config } from './config';
+import { config } from '../../config';
+import { ForbiddenError, UnauthorizedError } from '../../lib/errors';
 
+import type { AppError } from '../../lib/errors';
 import type { Request, Response, NextFunction } from 'express';
+
+/** Responds using the status code mapped from the error type. */
+const sendError = (res: Response, err: AppError) =>
+  res.status(err.statusCode).json({ error: err.message });
 
 // ── Admin auth (existing) ─────────────────────────────────────────────────────
 
@@ -24,7 +29,7 @@ export const adminAuthMiddleware = (
     req.adminId = 'admin_001';
     next();
   } else {
-    res.status(401).json({ error: 'Unauthorized: Invalid Admin Secret' });
+    sendError(res, new UnauthorizedError('Unauthorized: Invalid Admin Secret'));
   }
 };
 
@@ -42,9 +47,10 @@ export const jwtAuthMiddleware = (req: AuthenticatedRequest, res: Response, next
   const authHeader = req.headers['authorization'];
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res
-      .status(401)
-      .json({ error: 'Unauthorized: Missing or malformed Authorization header' });
+    return sendError(
+      res,
+      new UnauthorizedError('Unauthorized: Missing or malformed Authorization header')
+    );
   }
 
   const token = authHeader.slice(7); // strip "Bearer "
@@ -55,9 +61,12 @@ export const jwtAuthMiddleware = (req: AuthenticatedRequest, res: Response, next
     next();
   } catch (err: unknown) {
     const isExpired = err instanceof Error && err.name === 'TokenExpiredError';
-    return res.status(401).json({
-      error: isExpired ? 'Unauthorized: Token expired' : 'Unauthorized: Invalid token',
-    });
+    return sendError(
+      res,
+      new UnauthorizedError(
+        isExpired ? 'Unauthorized: Token expired' : 'Unauthorized: Invalid token'
+      )
+    );
   }
 };
 
@@ -71,7 +80,7 @@ export const requireSelf = (req: AuthenticatedRequest, res: Response, next: Next
   const paramAddress = req.params.walletAddress || req.params.userId;
 
   if (!paramAddress || req.walletAddress !== paramAddress) {
-    return res.status(403).json({ error: 'Forbidden: You can only access your own data' });
+    return sendError(res, new ForbiddenError('Forbidden: You can only access your own data'));
   }
 
   next();

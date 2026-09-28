@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { jwtAuthMiddleware } from '../auth_middleware';
+import { jwtAuthMiddleware } from '../modules/auth/auth_middleware';
 import { AppError } from '../lib/errors';
 import { logger } from '../logger';
 import { submitKyc, getKycStatus, pollAndUpdateStatus, emitKycStatusChange, verifyKycWebhookSignature } from '../services/kyc';
 
-import type { AuthenticatedRequest } from '../auth_middleware';
+import type { AuthenticatedRequest } from '../modules/auth/auth_middleware';
 import type { Request, Response, NextFunction } from 'express';
 
 export function createKycRouter(): Router {

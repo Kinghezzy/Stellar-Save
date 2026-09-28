@@ -7,7 +7,7 @@ import {
   distributeRewards,
   saveAmbassadorProfile,
 } from '../ambassador_service';
-import { jwtAuthMiddleware, adminAuthMiddleware } from '../auth_middleware';
+import { jwtAuthMiddleware, adminAuthMiddleware } from '../modules/auth/auth_middleware';
 import { AppError } from '../lib/errors';
 
 import type { NextFunction } from 'express';

@@ -5,7 +5,7 @@ import { AdminService } from '../admin_service';
 import { createAnalyticsMiddlewareStack, createAnalyticsCacheMiddleware } from '../analytics_middleware';
 import { apiKeyAuthMiddleware, recordApiUsage } from '../api_key_rate_limiter';
 import { apiKeyService } from '../api_key_service';
-import { adminAuthMiddleware } from '../auth_middleware';
+import { adminAuthMiddleware } from '../modules/auth/auth_middleware';
 import { toContractEventDTO } from '../dto';
 import { createGovernanceRouter } from './governance';
 import { createInsuranceRouter } from './insurance';

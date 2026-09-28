@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { jwtAuthMiddleware } from '../auth_middleware';
+import { jwtAuthMiddleware } from '../modules/auth/auth_middleware';
 import { AppError } from '../lib/errors';
 import { logger } from '../logger';
 import {
@@ -10,7 +10,7 @@ import {
   completePrivacyRequest,
 } from '../privacy_service';
 
-import type { AuthenticatedRequest } from '../auth_middleware';
+import type { AuthenticatedRequest } from '../modules/auth/auth_middleware';
 import type { Response, NextFunction } from 'express';
 
 /**
