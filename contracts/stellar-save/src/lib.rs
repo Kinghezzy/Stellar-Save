@@ -58,6 +58,7 @@ pub mod storage_optimization;
 pub mod time_source;
 pub mod token;
 pub mod types;
+pub mod zk_proof;
 
 // mod auto_contribution_tests;
 pub mod cei_tests;
@@ -74,6 +75,7 @@ pub mod milestones;
 // mod mutation_tests;
 // mod upgrade_tests;
 pub mod wrapping_audit;
+pub mod zk_integration_tests;
 pub mod zk_tests;
 
 // ── Re-exports ────────────────────────────────────────────────────────────────
@@ -88,3 +90,4 @@ pub use group::{Group, GroupStatus};
 pub use payout::PayoutRecord;
 pub use storage::StorageKeyBuilder;
 pub use types::{ContractConfig, MemberProfile};
+

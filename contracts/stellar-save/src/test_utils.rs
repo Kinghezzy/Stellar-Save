@@ -17,12 +17,7 @@ use soroban_sdk::{
     Address, Env, String,
 };
 
-use crate::{
-    group::{Group, GroupStatus, TokenConfig},
-    storage::StorageKeyBuilder,
-    types::ContractConfig,
-    StellarSaveClient, StellarSaveContract,
-};
+use crate::{StellarSaveContractClient, StellarSaveContract};
 
 // ─── Environment & Client Setup ──────────────────────────────────────────────
 
@@ -49,10 +44,10 @@ pub fn create_env() -> Env {
 /// # Returns
 /// A tuple of `(env, client, token_address, token_client)` where:
 /// - `env`: The Soroban test environment
-/// - `client`: The generated StellarSaveClient for contract interaction
+/// - `client`: The generated StellarSaveContractClient for contract interaction
 /// - `token_address`: The address of the deployed mock token
 /// - `token_client`: StellarAssetClient for token operations
-pub fn setup<'a>() -> (Env, StellarSaveClient<'a>, Address, StellarAssetClient<'a>) {
+pub fn setup<'a>() -> (Env, StellarSaveContractClient<'a>, Address, StellarAssetClient<'a>) {
     let env = create_env();
 
     let admin = Address::generate(&env);
@@ -61,7 +56,7 @@ pub fn setup<'a>() -> (Env, StellarSaveClient<'a>, Address, StellarAssetClient<'
     let sac_client = StellarAssetClient::new(&env, &token);
 
     let contract_id = env.register(StellarSaveContract, ());
-    let client = StellarSaveClient::new(&env, &contract_id);
+    let client = StellarSaveContractClient::new(&env, &contract_id);
 
     (env, client, token, sac_client)
 }
@@ -131,7 +126,7 @@ pub fn stroops_to_xlm(stroops: i128) -> i128 {
 ///
 /// # Arguments
 /// * `env` - The Soroban environment
-/// * `client` - The StellarSaveClient
+/// * `client` - The StellarSaveContractClient
 /// * `sac` - StellarAssetClient for minting tokens
 /// * `contribution_amount` - Required contribution per cycle (in stroops)
 /// * `cycle_duration` - Duration of each cycle (in seconds)
@@ -141,7 +136,7 @@ pub fn stroops_to_xlm(stroops: i128) -> i128 {
 /// A tuple of `(group_id, alice_address, bob_address, carol_address)`
 pub fn setup_3_member_group_with_params(
     env: &Env,
-    client: &StellarSaveClient,
+    client: &StellarSaveContractClient,
     sac: &StellarAssetClient,
     contribution_amount: i128,
     cycle_duration: u32,
@@ -173,14 +168,14 @@ pub fn setup_3_member_group_with_params(
 ///
 /// # Arguments
 /// * `env` - The Soroban environment
-/// * `client` - The StellarSaveClient
+/// * `client` - The StellarSaveContractClient
 /// * `sac` - StellarAssetClient for minting tokens
 ///
 /// # Returns
 /// A tuple of `(group_id, alice_address, bob_address, carol_address)`
 pub fn setup_3_member_group(
     env: &Env,
-    client: &StellarSaveClient,
+    client: &StellarSaveContractClient,
     sac: &StellarAssetClient,
 ) -> (u64, Address, Address, Address) {
     let contribution = 10 * crate::xlm::STROOPS_PER_XLM;
