@@ -288,7 +288,6 @@ async function updateServiceWithNewSecret(
 
   // Example: Update database password
   if (secretId.includes('db-password')) {
-    // await updateDatabasePassword(newValue);
     logger.info('Database password would be updated here');
   }
 
@@ -311,7 +310,6 @@ async function testSecretValue(
 
     if (secretId.includes('db-password')) {
       // Test database connection with new password
-      // const connection = await testDatabaseConnection(value);
       logger.info('Testing database connection with new password');
       return { success: true };
     }

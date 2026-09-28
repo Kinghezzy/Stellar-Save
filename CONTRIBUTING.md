@@ -226,6 +226,73 @@ const ContributionCard = ({ amount, member, isPaid }: ContributionCardProps) => 
   - **Indentation**: 4 spaces for Rust (`.rs`); 2 spaces for TypeScript (`.ts`, `.tsx`), JavaScript, JSON, CSS/SCSS, Shell, TOML, YAML, and SQL
 - Do not commit secrets, private keys, or `.env` files — `.gitignore` covers common cases but double-check before staging
 
+### Commented-Out Code
+
+**Never commit commented-out code.** Version control already keeps the history, so
+a commented block is never the safe place for code that is "not ready yet" — it is
+invisible to the compiler, untested, never type-checked, never linted, and never
+reviewed as code. It silently rots, and the next reader cannot tell whether it
+is current, intended, or abandoned.
+
+Delete it, or finish it in the same change. If it must not ship yet, open a
+tracking issue and link it from the prose.
+
+```ts
+// Bad - dead code that still looks like it does something
+// const result = await getUserBalance(userId);
+// if (result > 0) {
+//   showBanner();
+// }
+// export default router;
+```
+
+```ts
+// Good - the behaviour is implemented
+const result = await getUserBalance(userId);
+if (result > 0) {
+  showBanner();
+}
+```
+
+```ts
+// Good - a comment that is actually documentation
+// Balances are cached for 30s to avoid hammering the RPC on every render.
+```
+
+The distinction is intent, not length: a comment that **explains** stays, a
+comment that **does** goes.
+
+Comments that are documentation, not code, are fine and expected:
+
+- Explanations of *why* non-obvious code does something
+- Section dividers and banners (`// --- Auth middleware ---`)
+- Doc comments (`/** ... */`, JSDoc, Rust `///` and `//!`)
+- Licence and copyright headers
+- Lint/tool directives: `eslint-disable-next-line`, `// @ts-expect-error`,
+  `// prettier-ignore`, `#[allow(...)]` — these are consumed by tooling, and
+  several of them stop working entirely once the line is edited
+
+Intent markers such as `TODO`, `FIXME`, and `HACK` are also allowed. They must
+name the work rather than describe code, and should reference a tracking issue:
+
+```ts
+// TODO(#1234): switch to cursor pagination once the API exposes a page token.
+```
+
+Guidelines:
+
+1. **Do not comment out code to disable it temporarily.** A feature flag, an
+   early `return`, or an actual `if` condition is reviewable and testable;
+   commented code is none of those.
+2. **If you uncomment something in review, uncomment the tests too**, or delete
+   the tests. A test for code that is not wired up is itself dead weight.
+3. **The pre-commit gate is a backstop, not a substitute.** `no-unused-vars` and
+   `@typescript-eslint/no-explicit-any` (both `error` repo-wide in
+   `eslint.config.base.js`) catch the related smell of an unused leftover, but
+   no linter can tell that a comment is meant to compile — so this rule is
+   enforced in code review. Treat a commented-out block in a diff as a
+   blocking comment.
+
 ---
 
 ## Git Hooks

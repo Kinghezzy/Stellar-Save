@@ -40,11 +40,6 @@ export async function verifyProof(req: VerifyRequest): Promise<VerifyResult> {
   }
 }
 
-// --- Minimal Express route handler (attach to your router) ---
-// import express from 'express';
-// const router = express.Router();
-// router.post('/zk/verify', async (req, res) => {
-//   const result = await verifyProof(req.body as VerifyRequest);
-//   res.json(result);
-// });
-// export default router;
+// The HTTP surface for this module is documented in docs/zk-verification.md
+// (POST /api/zk/verify). The route itself is registered by the server that
+// owns the API surface, not here.
