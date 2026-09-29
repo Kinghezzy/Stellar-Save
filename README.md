@@ -259,3 +259,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <!-- handsoff-issue-1704 -->
 - #1704: [Backend] Remove duplicate RPC failover logic now redundant with issue #1559 fix
+
+<!-- handsoff-issue-1706 -->
+- #1706: [Smart Contracts] Split contract.rs entrypoint into focused modules
