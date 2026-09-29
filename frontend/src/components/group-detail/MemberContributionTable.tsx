@@ -1,5 +1,7 @@
-import { Typography, Box, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar } from '@mui/material';
+import { Typography, Box, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar, Paper } from '@mui/material';
 import type { MemberCycleStatus } from './groupDetailSelectors';
+import type { DetailedGroup } from '../utils/groupApi';
+import { ContributionStatusIcon } from './ContributionStatusIcon';
 
 /**
  * Member contribution status per cycle.
