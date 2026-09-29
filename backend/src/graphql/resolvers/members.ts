@@ -1,8 +1,8 @@
-import { paginateArray } from '../../lib/pagination';
-import { mockGroups, mockMembers, mockTransactions } from '../../mock_data';
+import { paginateArray } from '@app/backend/lib/pagination';
+import { mockGroups, mockMembers, mockTransactions } from '@app/backend/mock_data';
 
-import type { OffsetParams } from '../../lib/pagination';
-import type { Member } from '../../models';
+import type { OffsetParams } from '@app/backend/lib/pagination';
+import type { Member } from '@app/backend/models';
 
 export const memberResolvers = {
   Query: {
