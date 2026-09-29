@@ -256,3 +256,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <!-- handsoff-issue-1685 -->
 - #1685: [Backend] Extract rate limiting logic into a single reusable middleware
+
+<!-- handsoff-issue-1704 -->
+- #1704: [Backend] Remove duplicate RPC failover logic now redundant with issue #1559 fix
