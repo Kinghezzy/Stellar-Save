@@ -256,3 +256,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <!-- handsoff-issue-1685 -->
 - #1685: [Backend] Extract rate limiting logic into a single reusable middleware
+
+<!-- handsoff-issue-1747 -->
+- #1747: [Testing] Add SDK package integration test against a local Soroban sandbox
