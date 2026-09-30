@@ -18,3 +18,8 @@ pub mod fuzz;
 
 pub use error::{CommonResult, Error, ErrorCategory};
 pub use fuzz::{FuzzRng, FuzzRunner};
+
+/// Re-export of the canonical error module so downstream contracts can pull the
+/// shared variants in with a single `use common::errors::*;` import, matching
+/// the module name used by the per-contract error files this replaces.
+pub use error as errors;

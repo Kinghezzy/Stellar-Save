@@ -1,6 +1,6 @@
-import { AnalyticsService } from '../../analytics_service';
-import { logger } from '../../logger';
-import { prisma } from '../../prisma_client';
+import { AnalyticsService } from '@app/backend/analytics_service';
+import { logger } from '@app/backend/logger';
+import { prisma } from '@app/backend/prisma_client';
 
 export class AnalyticsHandler {
   private analyticsService: AnalyticsService;
