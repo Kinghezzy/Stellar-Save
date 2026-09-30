@@ -1,3 +1,4 @@
+// @app/config
 /**
  * Centralised environment configuration for the Stellar-Save backend.
  *
